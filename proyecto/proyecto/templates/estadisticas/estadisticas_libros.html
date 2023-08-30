@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Estadísticas Libros</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!--Contenedor principal con margen superior-->>
+    <div class="container mt-4">
+        <!--Fila-->>
+        <div class="row">
+            <!-- Columna centada en dispositivos medianos(ancho pantalla=>768)-->
+            <div class="col-md-8 offset-md-2">
+                <h1>Estadísticas de libros</h1>
+                <!--Div centrado con margenes inferiores-->
+                <div class="text-center mb-3">
+                    <p>Total de páginas de todo los libros: {{total_paginas}}</p>
+                    <p>Año maximo de publicación:{{max_anio_publicacion}}</p>
+                    <p>Número promedio de páginas:{{promedio_paginas}}</p>
+                    <!--Contenedor para el gráfico-->
+                    <div style="height: 400px;">
+                        <!--Canvas donde se mostrará el gráfico-->
+                        <canvas id="miGrafico"></canvas>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--JavaScript para crear y configurar el gráfico-->
+    <script>
+        //Datos para el gráfico , primero los labels que es el texto que se tiene para mostrar los datos
+        var datos = {
+            labels: ["Total de páginas", "Año maximo de públicación", "Número promedio de páginas"],
+            datasets: [{
+                label:"Estadísticas de libros",
+                backgroundColor: ["red", "blue", "green"],
+                data: [{{ total_paginas }}, {{ max_anio_publicacion }}, {{ promedio_paginas }}]
+            }]
+        };
+        //Para configuración del gráfico:
+        //se hara algo para tener una relacion de aspecto fija y no se distorcione en diferentes tamaños de pantalla
+        var opciones = {
+        responsive: true,
+        maintainApect: false
+    }
+    //Ahora crear el gráfico ya que lo anterior es obtener datos y configuraciones:
+    var ctx = document.getElementById("miGrafico").getContext("2d")
+    var miGrafico = new Chart(ctx,{
+        //aqui se especifica lo mas general que es el tipo
+        type: 'bar',
+        data: datos,
+        options: opciones
+    });
+    </script>
+
+</body>
+
+</html>

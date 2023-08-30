@@ -1,0 +1,95 @@
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+  <head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+      .titulo{
+        background-color: #f49dff;
+        border-radius: 20px;
+        padding: 10px;
+        font-family: Arial;
+        margin-top: 0px;
+        box-shadow: 0px 10px 10px gray;
+      }
+      h1{
+        color:white;
+        font-size: xxx-large;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- encabezado -->
+    <div class="titulo" align="center">
+      <h1>Libros</h1>
+    </div>
+    <!-- contenido -->
+    {% block content %}
+    <div align="center">
+      <div style="width: 70%;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">
+                #
+              </th>
+              <th scope="col">
+                Titulo
+              </th>
+              <th scope="col">
+                Edición
+              </th>
+              <th scope="col">
+                Editorial
+              </th>
+              <th scope="col">
+                Año de publicación
+              </th>
+              <th scope="col">
+                Número de páginas
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for libro in libros %}
+            <tr>
+              <td scope="row">
+                {{ libro.pk }}
+              </td>
+              <td>
+                {{ libro.titulo }}
+              </td>
+              <td>
+                {{ libro.edicion }}
+              </td>
+              <td>
+                {{ libro.editorial }}
+              </td>
+              <td>
+                {{ libro.año_publicacion }}
+              </td>
+              <td>
+                {{ libro.numero_paginas }}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endblock %}
+
+    <!--div>
+      {% for libro in libros %}
+      <p>{{ libro.titulo }}</p>
+      {% endfor %}
+    </div>
+    <div>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+      </form>
+    </div-->
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!-- primero se crea la extensión de base para que se pueda ver el menú-->
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> Login</h1>
+
+{% if messages %}
+<!-- bloque de mensajes -->
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tag %} class="{{ message.tags }}" {% endif %}> {{message}} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<!-- Formulario de Login -->
+<form method="POST">
+    {% csrf_token %} <!--TIPO DE ATAQUE MALICIOSO Y NOS ASEGURAMOS DE CUALQUIER FORMUARIO TENGA UNA VALIDACION DE UN TOKEN PARA EVITAR ESTE TIPO DE ATAQUES-->
+    <label for="username"> Username</label>
+    <input type="text" name = "username" id="username" required > <!-- required sirve para que sea forzoso  -->
+    <br>
+    <label for="password"> Password</label>
+    <input type="password" name = "password" id="password" required >
+    <br>
+    <input class="btn-primary" type="submit" value="Iniciar Sesión"> <!-- Este funcionara como boton usando submit-->
+    <button class="btn-primary" type="button" onclick="window.location.href='{% url 'register' %}'">REGISTRARSE</button>
+
+</form>
+<a href="{% url 'password_reset' %}">HAZ OLVIDATO TU CONTRASEÑA</a>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %} 
+{% block content %}
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+  <head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+</head>
+<body>
+            <!-- Formulario --> 
+            
+            <form method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="{{ form.titulo.id_for_label }}">Titulo</label>
+                {{ form.titulo|add_class:"form-control" }}
+              </div>
+              <div class="form-group">
+                <label for="{{ form.edicion.id_for_label }}">Edición</label>
+                {{ form.edicion|add_class:"form-control" }}
+              </div>
+              <div class="form-group">
+                <label for="{{ form.editorial.id_for_label }}">Editorial</label>
+                {{ form.editorial|add_class:"form-control" }}
+              </div>
+              <div class="form-group">
+                <label for="{{ form.año_publicacion.id_for_label }}">Año de publicación</label>
+                {{ form.año_publicacion|add_class:"form-control" }}
+              </div>
+              <div class="form-group">
+                <label for="{{ form.numero_paginas.id_for_label }}">Número de páginas</label>
+                {{ form.numero_paginas|add_class:"form-control" }}
+              </div>
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            </form>
+    
+          </div>
+        </div>
+        
+    
+    
+       
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "base.html" %} 
+{% block content %}
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+
+<head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        .titulo {
+            background-color: #286150;
+            border-radius: 20px;
+            padding: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            color: white;
+            font-size: xxx-large;
+        }
+    </style>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+   
+    <!-- Contenido -->
+    
+    <div align="center">
+        <div style="width: 70%;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            #
+                        </th>
+                        <th scope="col">
+                            Titulo
+                        </th>
+                        <th scope="col">
+                            Edición
+                        </th>
+                        <th scope="col">
+                            Editorial
+                        </th>
+                        <th scope="col">
+                            Año de publicación
+                        </th>
+                        <th scope="col">
+                            Número de páginas
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for libro in libros %}
+                    <tr>
+                        <td scope="row">{{libro.pk}}</td>
+                        <td scope="row">{{libro.titulo}}</td>
+                        <td scope="row">{{libro.edicion}}</td>
+                        <td scope="row">{{libro.editorial}}</td>
+                        <td scope="row">{{libro.año_publicacion}}</td>
+                        <td scope="row">{{libro.paginas}}</td>
+                        <td>
+                            <form method="post" class="form-eliminar" id="form-eliminar" action="{% url 'eliminar_libro' libro.pk %}">
+                                {% csrf_token%}
+                                <input type="hidden" name="libro_id" value="{{ libro.pk }}">
+                                <button type="button" class="btn btn-danger" id="btn-confirmar-eliminar-{{ libro.pk }}" >Eliminar</button>
+                                <div class="dropdown" id="dropdown-confirmacion-{{ libro.pk }}" style="display: none;">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Confirmar Eliminación
+                                    </button>
+                                
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button class="dropdown-item" type="submit">Si, Eliminar</button>
+                                    <button class="dropdown-item" type="button" id="btn-cancelar-eliminar-{{ libro.pk }}">Cancelar</button>
+                                </div>
+                            </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+      
+        </div>
+    </div>
+   
+<script>
+
+    //se modifico código para que cada botón trabaje de forma independiente, esta comentado con los comentarios por si hay dudas:
+    $(document).ready(function(){
+        //Mostar el menú despegable 
+        $('[id^="btn-confirmar-eliminar"]').click(function(){
+          var divId = $(this).attr('id').split('-')[3];
+          $('#dropdown-confirmacion-' + divId).show();
+        });
+        //Cancelar la eliminación
+        $('[id^="btn-cancelar-eliminar"]').click(function(){
+            var divId = $(this).attr('id').split('-')[3];
+          $('#dropdown-confirmacion-' + divId ).hide();
+    
+          
+        });
+      });
+    
+
+
+    /*//La siguiente instrucción   document.ready es un evento de jQuery que se activa cuando el documento está listo para ser manipulado con JavaScript123
+    $(document).ready(function(){
+        //lo siguiente es un botón que esta en la parte de arriba que escuchara cuando den el click. Mostrara el menú desplegable para preguntar esta es la primera funcionalidad
+        $('#btn-confirmar-eliminar').click(function(){
+            //Con esto siguiente se realizara que el dropdown-confirmación se muestre, es una clase con un boton eliminar y un texto para confirmar eliminación
+            $('#dropdown-confirmacion').show();
+        });
+        //la siguiente funcionalidad sería para cancelar la eliminación, y se aplicaría que se esconda:
+        $('#btn-cancelar-eliminar').click(function(){
+            $('#dropdown-confirmacion').hide();
+        });
+    })*/
+</script>
+    
+    
+    <!-- 
+    <div>
+        {% for libro in libros %}
+        <p>{{libro.titulo}}</p>
+        {% endfor %}
+
+    </div>
+    <div>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Guardar</button>
+        </form>
+      </div> -->
+</body>
+
+</html>
+{% endblock %}
